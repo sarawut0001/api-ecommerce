@@ -1,6 +1,13 @@
+const prisma = require("../config/prisma");
+
 exports.create = async (req, res) => {
   try {
-    res.send("Hello category");
+    const { name } = req.body;
+    const category = await prisma.category.create({
+      data: { name },
+    });
+
+    res.send(category);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Sever Error" });
@@ -9,7 +16,9 @@ exports.create = async (req, res) => {
 
 exports.list = async (req, res) => {
   try {
-    res.send("Hello category list");
+    const category = await prisma.category.findMany();
+
+    res.send(category);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Sever Error" });
@@ -18,8 +27,13 @@ exports.list = async (req, res) => {
 
 exports.remove = async (req, res) => {
   try {
-    console.log(req.body);
-    res.send("Hello remove category");
+    const { id } = req.params;
+
+    const category = await prisma.category.delete({
+      where: { id: Number(id) },
+    });
+
+    res.send(category);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Sever Error" });
