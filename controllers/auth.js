@@ -52,7 +52,7 @@ exports.login = async (req, res) => {
 
     const payload = {
       id: user.id,
-      password: user.email,
+      email: user.email,
       role: user.role,
     };
 
